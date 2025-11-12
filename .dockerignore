@@ -1,0 +1,89 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!README.md
+docs/
+CHANGELOG.md
+SECURITY.md
+COPYING.txt
+LICENSE*.txt
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+bitbucket-pipelines.yml
+.travis.yml
+Jenkinsfile
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Magento specific
+var/
+generated/
+pub/static/
+pub/media/catalog/
+pub/media/customer/
+pub/media/downloadable/
+pub/media/import/
+pub/media/custom_options/
+pub/media/theme_customization/
+app/etc/env.php
+app/etc/config.php
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Tests
+dev/tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Build artifacts
+.grunt/
+.sass-cache/
+*.map
+
+# Environment files
+.env
+.env.local
+.env.*.local
+auth.json
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Cloud Run specific (keep these)
+!docker/nginx-cloudrun.conf
+!docker/supervisord-cloudrun.conf
+!docker/cloudrun-entrypoint.sh

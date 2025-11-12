@@ -1,0 +1,126 @@
+image: atlassian/default-image:3
+
+definitions:
+  steps:
+    - step: &install-gcloud
+        name: Install gcloud SDK
+        script:
+          - echo "Installing Google Cloud SDK..."
+          - |
+            export CLOUDSDK_CORE_DISABLE_PROMPTS=1
+            export CLOUDSDK_INSTALL_DIR=/usr/local
+            curl https://sdk.cloud.google.com | bash
+            export PATH=/usr/local/google-cloud-sdk/bin:$PATH
+            gcloud --version
+        artifacts:
+          - google-cloud-sdk/**
+    
+    - step: &build-docker-image
+        name: Build Docker Image
+        image: docker:latest
+        services:
+          - docker
+        script:
+          - echo "Building Docker image for Cloud Run..."
+          - |
+            # Authenticate with Google Container Registry
+            echo $GCP_SERVICE_ACCOUNT_KEY | base64 -d > /tmp/gcp-key.json
+            export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json
+            gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+            gcloud auth configure-docker
+            
+            # Set variables
+            export PROJECT_ID="${GCP_PROJECT_ID}"
+            export REGION="${GCP_REGION:-us-central1}"
+            export IMAGE_NAME="${DOCKER_IMAGE_NAME:-magento-cloudrun}"
+            export IMAGE_TAG="${BITBUCKET_COMMIT:0:7}"
+            
+            # Build the Docker image
+            docker build -f Dockerfile.cloudrun -t gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG} .
+            docker build -f Dockerfile.cloudrun -t gcr.io/${PROJECT_ID}/${IMAGE_NAME}:latest .
+            
+            # Push to Google Container Registry
+            docker push gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG}
+            docker push gcr.io/${PROJECT_ID}/${IMAGE_NAME}:latest
+            
+            echo "Docker image built and pushed successfully"
+            echo "Image: gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
+        after-script:
+          - rm -f /tmp/gcp-key.json
+    
+    - step: &deploy-to-cloud-run
+        name: Deploy to Cloud Run
+        script:
+          - echo "Deploying to Google Cloud Run..."
+          - |
+            # Install gcloud SDK if not already installed
+            if ! command -v gcloud &> /dev/null; then
+              export CLOUDSDK_CORE_DISABLE_PROMPTS=1
+              export CLOUDSDK_INSTALL_DIR=/usr/local
+              curl https://sdk.cloud.google.com | bash
+              export PATH=/usr/local/google-cloud-sdk/bin:$PATH
+            fi
+            
+            # Authenticate with Google Cloud
+            echo $GCP_SERVICE_ACCOUNT_KEY | base64 -d > /tmp/gcp-key.json
+            export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json
+            gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+            gcloud config set project ${GCP_PROJECT_ID}
+            
+            # Set variables
+            export PROJECT_ID="${GCP_PROJECT_ID}"
+            export REGION="${GCP_REGION:-us-central1}"
+            export SERVICE_NAME="${CLOUD_RUN_SERVICE_NAME:-magento-backend}"
+            export IMAGE_NAME="${DOCKER_IMAGE_NAME:-magento-cloudrun}"
+            export IMAGE_TAG="${BITBUCKET_COMMIT:0:7}"
+            export IMAGE_URL="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
+            
+            # Deploy to Cloud Run
+            gcloud run deploy ${SERVICE_NAME} \
+              --image ${IMAGE_URL} \
+              --platform managed \
+              --region ${REGION} \
+              --allow-unauthenticated \
+              --port 8080 \
+              --memory ${CLOUD_RUN_MEMORY:-2Gi} \
+              --cpu ${CLOUD_RUN_CPU:-2} \
+              --min-instances ${CLOUD_RUN_MIN_INSTANCES:-0} \
+              --max-instances ${CLOUD_RUN_MAX_INSTANCES:-10} \
+              --timeout ${CLOUD_RUN_TIMEOUT:-300} \
+              --set-env-vars="MAGE_ROOT=/var/www/html" \
+              ${CLOUD_RUN_ADDITIONAL_ARGS}
+            
+            echo "Deployment completed successfully"
+            echo "Service URL: $(gcloud run services describe ${SERVICE_NAME} --region ${REGION} --format 'value(status.url)')"
+        after-script:
+          - rm -f /tmp/gcp-key.json
+
+pipelines:
+  default:
+    - step: *install-gcloud
+    - step: *build-docker-image
+    - step: *deploy-to-cloud-run
+  
+  branches:
+    main:
+      - step: *install-gcloud
+      - step: *build-docker-image
+      - step: *deploy-to-cloud-run
+    master:
+      - step: *install-gcloud
+      - step: *build-docker-image
+      - step: *deploy-to-cloud-run
+  
+  custom:
+    build-only:
+      - step: *install-gcloud
+      - step: *build-docker-image
+    
+    deploy-only:
+      - step: *install-gcloud
+      - step: *deploy-to-cloud-run
+    
+    build-and-deploy:
+      - step: *install-gcloud
+      - step: *build-docker-image
+      - step: *deploy-to-cloud-run
