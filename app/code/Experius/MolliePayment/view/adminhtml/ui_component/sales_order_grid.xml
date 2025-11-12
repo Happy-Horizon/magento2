@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Experius. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="sales_order_columns">
+        <column name="mollie_payment_id" class="Experius\MolliePayment\Ui\Component\Listing\Column\MolliePaymentId">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Mollie Payment ID</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+    </columns>
+</listing>

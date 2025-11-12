@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © Experius. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @var \Experius\MolliePayment\Block\Adminhtml\Order\View\Payment\Info $block
+ */
+?>
+<?php if ($block->isMolliePayment()): ?>
+    <div class="admin__page-section-item-content">
+        <div class="order-payment-method-title">
+            <strong><?= $block->escapeHtml(__('Mollie Payment Information')) ?></strong>
+        </div>
+        <div class="order-payment-additional">
+            <?php if ($block->getMolliePaymentId()): ?>
+                <strong><?= $block->escapeHtml(__('Payment ID:')) ?></strong>
+                <span><?= $block->escapeHtml($block->getMolliePaymentId()) ?></span><br/>
+            <?php endif; ?>
+            <?php if ($block->getMollieStatus()): ?>
+                <strong><?= $block->escapeHtml(__('Status:')) ?></strong>
+                <span><?= $block->escapeHtml($block->getMollieStatus()) ?></span>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

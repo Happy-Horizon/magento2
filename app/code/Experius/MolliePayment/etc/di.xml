@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Experius. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="experius_molliepayment_add_mollie_payment_id_to_grid" 
+                type="Experius\MolliePayment\Plugin\Sales\Ui\Component\Listing\Column\AddMolliePaymentIdColumn" 
+                sortOrder="10"/>
+    </type>
+</config>

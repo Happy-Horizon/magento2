@@ -1,0 +1,20 @@
+<?php
+/**
+ * Copyright © Experius. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @var \Experius\MolliePayment\Block\Info $block
+ */
+?>
+<?php if ($block->getMolliePaymentId()): ?>
+    <div class="mollie-payment-info">
+        <strong><?= $block->escapeHtml(__('Mollie Payment ID:')) ?></strong>
+        <span><?= $block->escapeHtml($block->getMolliePaymentId()) ?></span>
+    </div>
+<?php endif; ?>
+<?php if ($block->getMollieStatus()): ?>
+    <div class="mollie-payment-status">
+        <strong><?= $block->escapeHtml(__('Payment Status:')) ?></strong>
+        <span><?= $block->escapeHtml($block->getMollieStatus()) ?></span>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Experius. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <molliepayment>
+                <active>0</active>
+                <model>Experius\MolliePayment\Model\Payment</model>
+                <order_status>pending</order_status>
+                <title>Mollie Payment</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+                <payment_action>authorize</payment_action>
+            </molliepayment>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © Experius. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @var \Experius\MolliePayment\Block\Adminhtml\Order\View\Tab\Payment $block
+ */
+?>
+<div class="admin__page-section-item-content">
+    <div class="order-payment-method-title">
+        <strong><?= $block->escapeHtml(__('Mollie Payment Details')) ?></strong>
+    </div>
+    <div class="order-payment-additional">
+        <?php if ($block->getMolliePaymentId()): ?>
+            <div class="admin__field">
+                <label class="admin__field-label"><?= $block->escapeHtml(__('Payment ID:')) ?></label>
+                <div class="admin__field-value">
+                    <?= $block->escapeHtml($block->getMolliePaymentId()) ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($block->getMollieStatus()): ?>
+            <div class="admin__field">
+                <label class="admin__field-label"><?= $block->escapeHtml(__('Status:')) ?></label>
+                <div class="admin__field-value">
+                    <?= $block->escapeHtml($block->getMollieStatus()) ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="admin__field">
+            <div class="admin__field-value">
+                <button type="button" class="action-secondary" onclick="location.href='<?= $block->escapeUrl($block->getSyncUrl()) ?>'">
+                    <span><?= $block->escapeHtml(__('Sync Payment Status')) ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
