@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Experius, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Prefer GuzzleAsyncClientPooled for AsyncClientInterface to enable DNS caching and connection pooling -->
+    <preference for="Magento\Framework\HTTP\AsyncClientInterface" type="Experius\HttpOptimization\Model\GuzzleAsyncClientPooled" />
+</config>
