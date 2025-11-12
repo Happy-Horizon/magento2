@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copyright © Horizon Storefront. All rights reserved.
+ * See LICENSE.txt for license details.
+ *
+ * @var \Horizon\Storefront\Block\Hreflang $block
+ */
+?>
+<?php if ($block->shouldRender()): ?>
+    <?php foreach ($block->getHreflangTags() as $tag): ?>
+        <link rel="alternate" hreflang="<?= $block->escapeHtmlAttr($tag['hreflang']) ?>" href="<?= $block->escapeUrl($tag['url']) ?>" />
+    <?php endforeach; ?>
+<?php endif; ?>

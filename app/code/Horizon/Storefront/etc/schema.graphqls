@@ -1,0 +1,26 @@
+# Copyright © Horizon Storefront. All rights reserved.
+# See LICENSE.txt for license details.
+
+# Extend ProductInterface with alternate URLs and canonical URL
+extend interface ProductInterface {
+    alternate_urls: [AlternateUrl] @doc(description: "Alternate URLs for href lang tags") @resolver(class: "Horizon\\Storefront\\Model\\Resolver\\Product\\AlternateUrls")
+    canonical_url: String @doc(description: "Canonical URL for the product") @resolver(class: "Horizon\\Storefront\\Model\\Resolver\\Product\\CanonicalUrl")
+}
+
+# Extend CategoryInterface with alternate URLs and canonical URL
+extend interface CategoryInterface {
+    alternate_urls: [AlternateUrl] @doc(description: "Alternate URLs for href lang tags") @resolver(class: "Horizon\\Storefront\\Model\\Resolver\\Category\\AlternateUrls")
+    canonical_url: String @doc(description: "Canonical URL for the category") @resolver(class: "Horizon\\Storefront\\Model\\Resolver\\Category\\CanonicalUrl")
+}
+
+# Extend CmsPage with alternate URLs and canonical URL
+extend type CmsPage {
+    alternate_urls: [AlternateUrl] @doc(description: "Alternate URLs for href lang tags") @resolver(class: "Horizon\\Storefront\\Model\\Resolver\\CmsPage\\AlternateUrls")
+    canonical_url: String @doc(description: "Canonical URL for the CMS page") @resolver(class: "Horizon\\Storefront\\Model\\Resolver\\CmsPage\\CanonicalUrl")
+}
+
+# Alternate URL type for href lang tags
+type AlternateUrl @doc(description: "Alternate URL with language code for href lang tags") {
+    hreflang: String @doc(description: "Language code (e.g., 'en-us', 'nl-nl', 'x-default')")
+    url: String @doc(description: "Alternate URL for the specified language")
+}

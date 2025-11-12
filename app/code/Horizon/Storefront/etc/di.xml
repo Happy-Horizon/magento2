@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Horizon Storefront. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin for GraphQL Reader to handle schema regeneration on decode failure -->
+    <type name="Magento\Framework\GraphQlSchemaStitching\Common\Reader">
+        <plugin name="horizon_storefront_graphql_reader_plugin" 
+                type="Horizon\Storefront\Plugin\Graphql\Reader" 
+                sortOrder="10"/>
+    </type>
+    
+    <!-- Helper for file content operations -->
+    <preference for="Horizon\Storefront\Helper\DataInterface" type="Horizon\Storefront\Helper\Data"/>
+</config>

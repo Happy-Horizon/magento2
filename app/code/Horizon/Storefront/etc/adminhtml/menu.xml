@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Horizon Storefront. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Horizon_Storefront::cache" title="Cache Management" module="Horizon_Storefront" sortOrder="30" parent="Magento_Backend::system" resource="Magento_Backend::cache"/>
+        <add id="Horizon_Storefront::cache_clean_graphql" title="Clean GraphQL Cache" module="Horizon_Storefront" sortOrder="50" parent="Horizon_Storefront::cache" action="horizon_storefront/cache/cleanGraphql" resource="Magento_Backend::cache"/>
+    </menu>
+</config>

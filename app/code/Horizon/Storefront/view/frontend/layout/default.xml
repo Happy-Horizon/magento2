@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Horizon Storefront. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <block class="Horizon\Storefront\Block\Hreflang" name="horizon.storefront.hreflang" template="Horizon_Storefront::hreflang.phtml" />
+    </head>
+</page>
