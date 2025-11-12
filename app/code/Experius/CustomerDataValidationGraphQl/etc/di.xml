@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Experius B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin for GetCartForUser to validate cart ownership -->
+    <type name="Magento\QuoteGraphQl\Model\Cart\GetCartForUser">
+        <plugin name="experius_customer_data_validation_get_cart_for_user" 
+                type="Experius\CustomerDataValidationGraphQl\Plugin\QuoteGraphQl\Model\Cart\GetCartForUserPlugin" 
+                sortOrder="10"/>
+    </type>
+
+    <!-- Plugin for Customer resolver to validate customer data -->
+    <type name="Magento\CustomerGraphQl\Model\Resolver\Customer">
+        <plugin name="experius_customer_data_validation_customer_resolver" 
+                type="Experius\CustomerDataValidationGraphQl\Plugin\CustomerGraphQl\Model\Resolver\CustomerPlugin" 
+                sortOrder="10"/>
+    </type>
+
+    <!-- Plugin for GetCustomerAddress to validate address ownership -->
+    <type name="Magento\CustomerGraphQl\Model\Customer\Address\GetCustomerAddress">
+        <plugin name="experius_customer_data_validation_get_customer_address" 
+                type="Experius\CustomerDataValidationGraphQl\Plugin\CustomerGraphQl\Model\Customer\Address\GetCustomerAddressPlugin" 
+                sortOrder="10"/>
+    </type>
+
+    <!-- Plugin for PlaceOrder to validate cart ownership before placing order -->
+    <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
+        <plugin name="experius_customer_data_validation_place_order" 
+                type="Experius\CustomerDataValidationGraphQl\Plugin\QuoteGraphQl\Model\Resolver\PlaceOrderPlugin" 
+                sortOrder="10"/>
+    </type>
+</config>

@@ -1,0 +1,15 @@
+# Copyright © Experius B.V. All rights reserved.
+# See COPYING.txt for license details.
+
+type Query {
+    validateCustomer(
+        customer_id: Int! @doc(description: "The customer ID to validate against the authenticated user.")
+    ): CustomerValidationResult @resolver(class: "Experius\\CustomerDataValidationGraphQl\\Model\\Resolver\\ValidateCustomer") @doc(description: "Validate that a customer ID matches the authenticated user. Used to prevent cross-customer data exposure.") @cache(cacheable: false)
+    
+    currentCustomer: Customer @resolver(class: "Experius\\CustomerDataValidationGraphQl\\Model\\Resolver\\CurrentCustomer") @doc(description: "Return detailed information about the currently authenticated customer account.") @cache(cacheable: false)
+}
+
+type CustomerValidationResult @doc(description: "Result of customer validation") {
+    is_valid: Boolean! @doc(description: "Whether the customer ID is valid for the authenticated user")
+    message: String @doc(description: "Validation message")
+}
