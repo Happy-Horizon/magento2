@@ -124,6 +124,8 @@ interface ProductInterface @typeResolver(class: "Magento\\CatalogGraphQl\\Model\
     manufacturer: Int @doc(description: "A number representing the product's manufacturer.")
     categories: [CategoryInterface] @doc(description: "The categories assigned to a product.") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Categories") @cache(cacheIdentity: "Magento\\CatalogGraphQl\\Model\\Resolver\\Category\\CategoriesIdentity")
     canonical_url: String @doc(description: "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Product\\CanonicalUrl")
+    hreflang: String @doc(description: "The hreflang value for the current page locale (e.g., 'en', 'nl').") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Product\\Hreflang")
+    alternate_urls: String @doc(description: "JSON string containing alternate URLs for hreflang tags. Format: [{\"hreflang\": \"en\", \"url\": \"https://example.com/path\"}, ...]") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Product\\AlternateUrls")
     media_gallery: [MediaGalleryInterface] @doc(description: "An array of media gallery objects.") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Product\\MediaGallery")
     custom_attributesV2(filters: AttributeFilterInput): ProductCustomAttributes @doc(description: "Product custom attributes.") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Product\\ProductCustomAttributes")
 }
@@ -260,6 +262,8 @@ interface CategoryInterface @typeResolver(class: "Magento\\CatalogGraphQl\\Model
     url_key: String @doc(description: "The URL key assigned to the category.")
     url_path: String @doc(description: "The URL path assigned to the category.")
     canonical_url: String @doc(description: "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Categories' is enabled.") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Category\\CanonicalUrl")
+    hreflang: String @doc(description: "The hreflang value for the current page locale (e.g., 'en', 'nl').") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Category\\Hreflang")
+    alternate_urls: String @doc(description: "JSON string containing alternate URLs for hreflang tags. Format: [{\"hreflang\": \"en\", \"url\": \"https://example.com/path\"}, ...]") @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Category\\AlternateUrls")
     position: Int @doc(description: "The position of the category relative to other categories at the same level in tree.")
     level: Int @doc(description: "The depth of the category within the tree.")
     created_at: String @deprecated(reason: "The field should not be used on the storefront.") @doc(description: "The timestamp indicating when the category was created.")
