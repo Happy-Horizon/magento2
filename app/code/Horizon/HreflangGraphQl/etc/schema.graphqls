@@ -1,0 +1,23 @@
+# Copyright © Horizon. All rights reserved.
+
+# Extend ProductInterface with alternate_urls field
+extend interface ProductInterface {
+    alternate_urls: [AlternateUrl] @doc(description: "An array of alternate URLs for different store views with hreflang tags.") @resolver(class: "Horizon\\HreflangGraphQl\\Model\\Resolver\\Product\\AlternateUrls")
+}
+
+# Extend CategoryInterface with alternate_urls field
+extend interface CategoryInterface {
+    alternate_urls: [AlternateUrl] @doc(description: "An array of alternate URLs for different store views with hreflang tags.") @resolver(class: "Horizon\\HreflangGraphQl\\Model\\Resolver\\Category\\AlternateUrls")
+}
+
+# Extend CmsPage with alternate_urls and canonical_url fields
+extend type CmsPage {
+    alternate_urls: [AlternateUrl] @doc(description: "An array of alternate URLs for different store views with hreflang tags.") @resolver(class: "Horizon\\HreflangGraphQl\\Model\\Resolver\\CmsPage\\AlternateUrls")
+    canonical_url: String @doc(description: "The relative canonical URL for the CMS page.") @resolver(class: "Horizon\\HreflangGraphQl\\Model\\Resolver\\CmsPage\\CanonicalUrl")
+}
+
+# Define AlternateUrl type
+type AlternateUrl @doc(description: "Contains alternate URL information with hreflang tag.") {
+    hreflang: String! @doc(description: "The hreflang code (e.g., 'en-US', 'nl-NL').")
+    url: String! @doc(description: "The relative URL for this store view.")
+}
