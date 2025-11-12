@@ -30,6 +30,7 @@ type CmsPage implements RoutableInterface @doc(description: "Contains details ab
     meta_title: String @doc(description: "A page title that is indexed by search engines and appears in search results listings.")
     meta_description: String @doc(description: "A brief description of the page for search results listings.")
     meta_keywords: String @doc(description: "A brief description of the page for search results listings.")
+    alternate_urls: String @resolver(class: "Magento\\CmsGraphQl\\Model\\Resolver\\Page\\AlternateUrls") @doc(description: "JSON string containing alternate URLs for hreflang tags. Format: {\"locale\": \"absolute_url\"}. All URLs are absolute and complete.")
 }
 
 type CmsBlocks @doc(description: "Contains an array CMS block items.") {
