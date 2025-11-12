@@ -79,6 +79,14 @@ class PopulateCustomerAddressFromInput
     {
         $this->dataObjectHelper->populateWithArray($address, $addressData, AddressInterface::class);
 
+        // Explicitly handle default_billing and default_shipping flags
+        if (isset($addressData['default_billing'])) {
+            $address->setIsDefaultBilling((bool)$addressData['default_billing']);
+        }
+        if (isset($addressData['default_shipping'])) {
+            $address->setIsDefaultShipping((bool)$addressData['default_shipping']);
+        }
+
         return $this->setRegionData($address, $addressData);
     }
 
