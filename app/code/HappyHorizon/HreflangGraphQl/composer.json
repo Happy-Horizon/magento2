@@ -1,0 +1,26 @@
+{
+    "name": "happyhorizon/module-hreflang-graph-ql",
+    "description": "Provides hreflang tag support for products and categories in Magento GraphQL API",
+    "type": "magento2-module",
+    "require": {
+        "php": "~8.1.0||~8.2.0||~8.3.0",
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "magento/module-catalog-graph-ql": "*",
+        "magento/module-store": "*",
+        "magento/module-store-graph-ql": "*",
+        "magento/module-graph-ql": "*"
+    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "HappyHorizon\\HreflangGraphQl\\": ""
+        }
+    }
+}

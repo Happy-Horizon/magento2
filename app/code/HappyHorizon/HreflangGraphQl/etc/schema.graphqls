@@ -1,0 +1,13 @@
+# Copyright © Happy Horizon. All rights reserved.
+
+# Extend ProductInterface with hreflang fields
+extend interface ProductInterface {
+    hreflang: String @doc(description: "The hreflang locale code for the current store view (e.g., 'en-us', 'nl-nl').") @resolver(class: "HappyHorizon\\HreflangGraphQl\\Model\\Resolver\\Product\\Hreflang")
+    alternate_urls: String @doc(description: "JSON string containing alternate URLs for all store views where this product is available. Format: [{\"locale\": \"en-us\", \"url\": \"https://example.com/product\"}, ...]") @resolver(class: "HappyHorizon\\HreflangGraphQl\\Model\\Resolver\\Product\\AlternateUrls")
+}
+
+# Extend CategoryInterface with hreflang fields
+extend interface CategoryInterface {
+    hreflang: String @doc(description: "The hreflang locale code for the current store view (e.g., 'en-us', 'nl-nl').") @resolver(class: "HappyHorizon\\HreflangGraphQl\\Model\\Resolver\\Category\\Hreflang")
+    alternate_urls: String @doc(description: "JSON string containing alternate URLs for all store views where this category is available. Format: [{\"locale\": \"en-us\", \"url\": \"https://example.com/category\"}, ...]") @resolver(class: "HappyHorizon\\HreflangGraphQl\\Model\\Resolver\\Category\\AlternateUrls")
+}
