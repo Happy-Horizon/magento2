@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © HK. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin for OrderSender to prevent emails for canceled/declined orders -->
+    <type name="Magento\Sales\Model\Order\Email\Sender\OrderSender">
+        <plugin name="hk_prevent_order_email_ordersender" 
+                type="HK\PreventOrderEmail\Plugin\OrderSender" 
+                sortOrder="10"/>
+    </type>
+    
+    <!-- Plugin for OrderRepositoryInterface to set canSendNewEmailFlag -->
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="hk_prevent_order_email_orderrepository" 
+                type="HK\PreventOrderEmail\Plugin\OrderRepository" 
+                sortOrder="10"/>
+    </type>
+</config>

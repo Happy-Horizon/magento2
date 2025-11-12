@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © HK. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- Observer for payment_status_update event -->
+    <event name="payment_status_update">
+        <observer name="hk_prevent_order_email_payment_status_update" 
+                  instance="HK\PreventOrderEmail\Model\Observer\PaymentStatusUpdate"/>
+    </event>
+    
+    <!-- Observer for sales_order_place_after event -->
+    <event name="sales_order_place_after">
+        <observer name="hk_prevent_order_email_prevent_order_email" 
+                  instance="HK\PreventOrderEmail\Model\Observer\PreventOrderEmail"/>
+    </event>
+</config>
