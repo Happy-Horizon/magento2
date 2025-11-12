@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © HappyHorizon, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin for HTTP Response -->
+    <type name="Magento\Framework\App\Response\Http">
+        <plugin name="happyhorizon_cache_layer_http_response" 
+                type="HappyHorizon\CacheLayer\Plugin\Http\Response\AddCacheHeaders" 
+                sortOrder="100"/>
+    </type>
+    
+    <!-- Plugin for GraphQL Controller -->
+    <type name="Magento\GraphQl\Controller\GraphQl">
+        <plugin name="happyhorizon_cache_layer_graphql_response" 
+                type="HappyHorizon\CacheLayer\Plugin\GraphQl\Response\AddCacheHeaders" 
+                sortOrder="100"/>
+    </type>
+</config>

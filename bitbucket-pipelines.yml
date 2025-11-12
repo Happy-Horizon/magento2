@@ -1,0 +1,92 @@
+image: php:8.1
+
+definitions:
+  steps:
+    - step: &fastly-purge-staging
+        name: Fastly Cache Purge - Staging
+        script:
+          - |
+            if [ -n "$FASTLY_SERVICE_ID_STAGING" ] && [ -n "$FASTLY_API_TOKEN_STAGING" ]; then
+              echo "Purging Fastly cache for staging..."
+              curl -X POST "https://api.fastly.com/service/${FASTLY_SERVICE_ID_STAGING}/purge_all" \
+                -H "Fastly-Key: ${FASTLY_API_TOKEN_STAGING}" \
+                -H "Accept: application/json"
+              echo "Staging cache purge completed"
+            else
+              echo "Fastly credentials not configured for staging"
+            fi
+    
+    - step: &fastly-purge-production
+        name: Fastly Cache Purge - Production
+        script:
+          - |
+            if [ -n "$FASTLY_SERVICE_ID_PRODUCTION" ] && [ -n "$FASTLY_API_TOKEN_PRODUCTION" ]; then
+              echo "Purging Fastly cache for production..."
+              curl -X POST "https://api.fastly.com/service/${FASTLY_SERVICE_ID_PRODUCTION}/purge_all" \
+                -H "Fastly-Key: ${FASTLY_API_TOKEN_PRODUCTION}" \
+                -H "Accept: application/json"
+              echo "Production cache purge completed"
+            else
+              echo "Fastly credentials not configured for production"
+            fi
+    
+    - step: &vercel-purge-staging
+        name: Vercel Cache Purge - Staging
+        script:
+          - |
+            if [ -n "$VERCEL_TOKEN_STAGING" ] && [ -n "$VERCEL_PROJECT_ID_STAGING" ]; then
+              echo "Purging Vercel cache for staging..."
+              curl -X POST "https://api.vercel.com/v1/deployments/${VERCEL_PROJECT_ID_STAGING}/cache" \
+                -H "Authorization: Bearer ${VERCEL_TOKEN_STAGING}" \
+                -H "Content-Type: application/json"
+              echo "Staging Vercel cache purge completed"
+            else
+              echo "Vercel credentials not configured for staging"
+            fi
+    
+    - step: &vercel-purge-production
+        name: Vercel Cache Purge - Production
+        script:
+          - |
+            if [ -n "$VERCEL_TOKEN_PRODUCTION" ] && [ -n "$VERCEL_PROJECT_ID_PRODUCTION" ]; then
+              echo "Purging Vercel cache for production..."
+              curl -X POST "https://api.vercel.com/v1/deployments/${VERCEL_PROJECT_ID_PRODUCTION}/cache" \
+                -H "Authorization: Bearer ${VERCEL_TOKEN_PRODUCTION}" \
+                -H "Content-Type: application/json"
+              echo "Production Vercel cache purge completed"
+            else
+              echo "Vercel credentials not configured for production"
+            fi
+
+pipelines:
+  branches:
+    staging:
+      - step:
+          <<: *fastly-purge-staging
+      - step:
+          <<: *vercel-purge-staging
+    
+    production:
+      - step:
+          <<: *fastly-purge-production
+      - step:
+          <<: *vercel-purge-production
+    
+    master:
+      - step:
+          <<: *fastly-purge-production
+      - step:
+          <<: *vercel-purge-production
+  
+  custom:
+    deploy-staging:
+      - step:
+          <<: *fastly-purge-staging
+      - step:
+          <<: *vercel-purge-staging
+    
+    deploy-production:
+      - step:
+          <<: *fastly-purge-production
+      - step:
+          <<: *vercel-purge-production
