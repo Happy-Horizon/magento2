@@ -1,0 +1,19 @@
+# Copyright © Experius, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type AlternateUrl @doc(description: "Contains alternate URL information for hreflang tags.") {
+    href: String! @doc(description: "The absolute URL for the alternate language version.")
+    hreflang: String! @doc(description: "The hreflang code (e.g., 'nl', 'en', 'nl-NL', 'x-default').")
+}
+
+extend type CmsPage @doc(description: "Extends CmsPage with alternate URLs for multi-language support.") {
+    alternate_urls: [AlternateUrl] @doc(description: "An array of alternate URLs for different languages and regions.") @resolver(class: "Experius\\AlternateGraphQl\\Model\\Resolver\\AlternateUrls")
+}
+
+extend interface ProductInterface @doc(description: "Extends ProductInterface with alternate URLs for multi-language support.") {
+    alternate_urls: [AlternateUrl] @doc(description: "An array of alternate URLs for different languages and regions.") @resolver(class: "Experius\\AlternateGraphQl\\Model\\Resolver\\AlternateUrls")
+}
+
+extend type CategoryTree @doc(description: "Extends CategoryTree with alternate URLs for multi-language support.") {
+    alternate_urls: [AlternateUrl] @doc(description: "An array of alternate URLs for different languages and regions.") @resolver(class: "Experius\\AlternateGraphQl\\Model\\Resolver\\AlternateUrls")
+}

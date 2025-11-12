@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Experius, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin to inject page model into CMS page resolver value -->
+    <type name="Magento\CmsGraphQl\Model\Resolver\Page">
+        <plugin name="experius_alternate_graphql_cms_page_model" 
+                type="Experius\AlternateGraphQl\Plugin\CmsGraphQl\PagePlugin" 
+                sortOrder="100"/>
+    </type>
+</config>

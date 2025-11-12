@@ -1,0 +1,27 @@
+{
+    "name": "experius/module-alternate-graph-ql",
+    "description": "Provides alternate URLs (hreflang) support for CmsPage, ProductInterface, and CategoryTree in GraphQL",
+    "type": "magento2-module",
+    "require": {
+        "php": "~8.1.0||~8.2.0||~8.3.0",
+        "magento/framework": "*",
+        "magento/module-cms": "*",
+        "magento/module-catalog": "*",
+        "magento/module-store": "*",
+        "magento/module-cms-graph-ql": "*",
+        "magento/module-catalog-graph-ql": "*",
+        "magento/module-graph-ql": "*"
+    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Experius\\AlternateGraphQl\\": ""
+        }
+    }
+}
